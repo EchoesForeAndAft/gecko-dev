@@ -348,6 +348,11 @@
   fill: var(--toolbar-field-icon-fill-attention);
 }
 
+#pageAction-panel-launchSSB,
+#pageAction-urlbar-launchSSB {
+  list-style-image: url("chrome://browser/skin/install-ssb.svg");
+}
+
 /* URL bar and page action buttons */
 
 /* The background can be very dark and if the add-on uses a black-ish svg it

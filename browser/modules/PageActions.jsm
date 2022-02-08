@@ -17,10 +17,12 @@ const { XPCOMUtils } = ChromeUtils.import(
 );
 
 XPCOMUtils.defineLazyModuleGetters(this, {
+  AppConstants: "resource://gre/modules/AppConstants.jsm",
   AsyncShutdown: "resource://gre/modules/AsyncShutdown.jsm",
   BinarySearch: "resource://gre/modules/BinarySearch.jsm",
   PrivateBrowsingUtils: "resource://gre/modules/PrivateBrowsingUtils.jsm",
   Services: "resource://gre/modules/Services.jsm",
+  SiteSpecificBrowserService: "resource:///modules/SiteSpecificBrowserService.jsm"
 });
 
 const ACTION_ID_BOOKMARK = "bookmark";
@@ -1181,6 +1183,20 @@ PageActions._initBuiltInActions = function() {
       },
     },
   ];
+
+  if (SiteSpecificBrowserService.isEnabled) {
+    gBuiltInActions.push({
+      id: "launchSSB",
+      // Hardcoded for now. Localization tracked in bug 1602528.
+      title: "Use This Site in App Mode",
+      onLocationChange(browserWindow) {
+        browserPageActions(browserWindow).launchSSB.updateState();
+      },
+      onCommand(event, buttonNode) {
+        browserPageActions(buttonNode).launchSSB.onCommand(event, buttonNode);
+      },
+    });
+  }
 };
 
 /**
