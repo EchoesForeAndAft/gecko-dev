@@ -83,6 +83,14 @@
                      key="key_openAddons"
                      command="Tools:Addons"
                      />
+      <!-- Previously had a class of subviewbutton-iconic, which creates an
+        unwanted indent in the button's text. I don't know how to use this atm. -->
+      <toolbarbutton id="appMenu-ssb-button"
+                     class="subviewbutton subviewbutton-nav" 
+                     label="Sites in App Mode"
+                     closemenu="none"
+                     oncommand="PanelUI.showSubView('appMenu-SSBView', this)"
+                     hidden="true" persist="hidden"/>
       <toolbarseparator/>
       <toolbarbutton id="appMenu-print-button2"
                      class="subviewbutton"
@@ -198,6 +206,11 @@
                    class="subviewbutton panel-subview-footer-button"
                    data-l10n-id="appmenu-manage-history"
                    oncommand="PlacesCommandHook.showPlacesOrganizer('History'); CustomizableUI.hidePanelForNode(this);"/>
+  </panelview>
+
+  <panelview id="appMenu-SSBView" class="PanelUI-subView">
+    <vbox class="panel-subview-body">
+    </vbox>
   </panelview>
 
   <panelview id="appMenu-library-recentlyClosedTabs"/>
