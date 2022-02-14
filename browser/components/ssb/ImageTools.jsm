@@ -134,4 +134,24 @@ const ImageTools = {
       });
     });
   },
+
+  savePNG(container, width, height, target) {
+    return new Promise((resolve, reject) => {
+      let output = FileUtils.openFileOutputStream(target);
+      let stream = ImgTools.encodeScaledImage(
+        container,
+        "image/png",
+        width,
+        height,
+        ""
+      );
+      NetUtil.asyncCopy(stream, output, status => {
+        if (Components.isSuccessCode(status)) {
+          resolve();
+        } else {
+          reject(Components.Exception("Failed to save PNG.", status));
+        }
+      });
+    });
+  },
 };

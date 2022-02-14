@@ -48,6 +48,12 @@ if (AppConstants.platform == "win") {
     "WindowsSupport",
     "resource:///modules/ssb/WindowsSupport.jsm"
   );
+} else if (AppConstants.platform == "linux") {
+  ChromeUtils.defineModuleGetter(
+    this,
+    "FreeDesktopSupport",
+    "resource:///modules/ssb/FreeDesktopSupport.jsm"
+  );
 }
 
 /**
@@ -532,6 +538,8 @@ class SiteSpecificBrowser extends SiteSpecificBrowserBase {
 
     if (AppConstants.platform == "win") {
       await WindowsSupport.install(this);
+    } else if (AppConstants.platform == "linux") {
+      await FreeDesktopSupport.install(this);
     }
 
     Services.obs.notifyObservers(
@@ -709,6 +717,8 @@ class SiteSpecificBrowser extends SiteSpecificBrowserBase {
 
     if (Services.appinfo.OS == "WINNT") {
       WindowsSupport.applyOSIntegration(this, win);
+    } else if (Services.appinfo.OS == "Linux") {
+      FreeDesktopSupport.applyOSIntegration(this, win);
     }
   }
 }
@@ -805,7 +815,7 @@ const SiteSpecificBrowserService = {
    * only disabled for testing.
    */
   get useOSIntegration() {
-    if (Services.appinfo.OS != "WINNT") {
+    if (Services.appinfo.OS != "WINNT" && Services.appinfo.OS != "Linux") {
       return false;
     }
 
